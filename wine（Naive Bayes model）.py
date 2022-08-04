@@ -19,6 +19,7 @@ print('测试数据得分: {:.2f}'.format(clf.score(X_test, y_test)))
 X_new = np.array([[13.2, 2.77, 2.51, 18.5, 96.6, 1.04, 2.55, 0.57, 1.47, 6.2, 1.05, 3.33, 820]])
 prediction = clf.predict(X_new)
 print('预测新红酒的分类为: {}'.format(wine['target_names'][prediction]))
+#检测结果：准确率为0.94
 
 
 

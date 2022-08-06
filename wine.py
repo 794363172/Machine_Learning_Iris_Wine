@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.neighbors import kneighbors_graph, KNeighborsClassifier
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
 
 wine = load_wine()
 X_train, X_test, y_train, y_test = train_test_split(wine.data, wine.target,
@@ -13,7 +14,7 @@ X_train, X_test, y_train, y_test = train_test_split(wine.data, wine.target,
 所以一般会随便选取一个random_state的值作为参数。
 X_train, X_test, y_train, y_test  记住这个顺序！！！！！！
 """
-knn = KNeighborsClassifier(n_neighbors=1)
+knn = KNeighborsClassifier(n_neighbors=1,weights='uniform')
 knn.fit(X_train, y_train)
 print('测试数据得分: {:.2f}'.format(knn.score(X_test, y_test)))
 
@@ -23,3 +24,12 @@ print('预测新红酒的分类为: {}'.format(wine['target_names'][prediction])
 
 #测试数据为0.74
 
+parameters = {'n_neighbors': [1, 10],'weights':['uniform','distance']}
+gs = GridSearchCV(estimator=knn,param_grid=parameters, refit = True, cv = 5, verbose = 1, n_jobs = -1)
+gs.fit(X_train,y_train)
+print('最优参数: ',gs.best_params_)
+print('最佳性能: ', gs.best_score_)
+print('最佳模型: ',gs.best_estimator_)
+# 最优参数:  {'n_neighbors': 1, 'weights': 'uniform'}
+# 最佳性能:  0.766
+#最佳模型:  KNeighborsClassifier(n_neighbors=1)

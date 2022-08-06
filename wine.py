@@ -21,5 +21,5 @@ X_new = np.array([[13.2, 2.77, 2.51, 18.5, 96.6, 1.04, 2.55, 0.57, 1.47, 6.2, 1.
 prediction = knn.predict(X_new)
 print('预测新红酒的分类为: {}'.format(wine['target_names'][prediction]))
 
-
+#测试数据为0.74
 

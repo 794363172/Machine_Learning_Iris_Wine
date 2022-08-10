@@ -1,7 +1,7 @@
 """
 wine（Naive Bayes model）~
 
-Author:杜博文
+Author:dbw
 Date：2022/8/2
 """
 import numpy as np

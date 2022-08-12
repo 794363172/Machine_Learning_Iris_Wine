@@ -7,6 +7,10 @@ from sklearn.model_selection import GridSearchCV
 wine = load_wine()
 X_train, X_test, y_train, y_test = train_test_split(wine.data, wine.target,
                                             test_size=0.3,random_state=1)
+from sklearn.preprocessing import Normalizer
+scaler = Normalizer().fit(X_train)
+normalized_X = scaler.transform(X_train)
+normalized_X_test = scaler.transform(X_test)
 """
 在需要设置random_state的地方给其赋一个值，当多次运行此段代码能够得到完全一样的结果，
 别人运行此代码也可以复现你的过程。若不设置此参数则会随机选择一个种子，执行结果也会因此而不同了。

@@ -40,3 +40,4 @@ clf.fit(X_train,y_train)
 
 score=clf.score(X_test, y_test)
 print('测试数据得分: ',score)
+#测试数据得分:  0.9777777777777777

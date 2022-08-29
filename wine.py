@@ -1,3 +1,4 @@
+# knn 标准化
 import numpy as np
 from sklearn.neighbors import kneighbors_graph, KNeighborsClassifier
 from sklearn.datasets import load_wine
@@ -7,10 +8,16 @@ from sklearn.model_selection import GridSearchCV
 wine = load_wine()
 X_train, X_test, y_train, y_test = train_test_split(wine.data, wine.target,
                                             test_size=0.3,random_state=1)
-from sklearn.preprocessing import Normalizer
-scaler = Normalizer().fit(X_train)
-normalized_X = scaler.transform(X_train)
-normalized_X_test = scaler.transform(X_test)
+from sklearn.preprocessing import Normalizer, StandardScaler
+
+# scaler = Normalizer().fit(X_train)
+# normalized_X = scaler.transform(X_train)
+# normalized_X_test = scaler.transform(X_test)
+# 先标准化再预测
+scaler = StandardScaler()  #变量scaler接收标准化方法
+# # 传入特征值进行标准化
+X_train = scaler.fit_transform(X_train)  #对训练的特征值标准化
+X_test = scaler.fit_transform(X_test)    #对测试的特征值标准化
 """
 在需要设置random_state的地方给其赋一个值，当多次运行此段代码能够得到完全一样的结果，
 别人运行此代码也可以复现你的过程。若不设置此参数则会随机选择一个种子，执行结果也会因此而不同了。
@@ -34,6 +41,15 @@ gs.fit(X_train,y_train)
 print('最优参数: ',gs.best_params_)
 print('最佳性能: ', gs.best_score_)
 print('最佳模型: ',gs.best_estimator_)
-# 最优参数:  {'n_neighbors': 1, 'weights': 'uniform'}
-# 最佳性能:  0.766
-#最佳模型:  KNeighborsClassifier(n_neighbors=1)
+# 测试数据得分: 0.98
+# 预测新红酒的分类为: ['class_0']
+# Fitting 5 folds for each of 4 candidates, totalling 20 fits
+# 最优参数:  {'n_neighbors': 10, 'weights': 'distance'}
+# 最佳性能:  0.952
+# 最佳模型:  KNeighborsClassifier(n_neighbors=10, weights='distance')
+
+from sklearn.datasets import load_wine
+wine_dataset = load_wine()
+print(wine_dataset.data.mean(0))
+print(wine_dataset.data.std(0))
+

@@ -1,10 +1,3 @@
-"""
-1~
-
-Author:杜博文
-Date：2022/7/11
-"""
-
 import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.metrics import accuracy_score
@@ -27,7 +20,7 @@ for i in range(len(iris.target)):
  """
  iris_X = iris.data#X为数据
  iris_Y = iris.target#Y为特征
- X_train, X_test, y_train, y_test = train_test_split(iris_X, iris_Y, test_size=0.3)#将数据集分为训练集和测试集
+ X_train, X_test, y_train, y_test = train_test_split(iris_X, iris_Y, test_size=0.3,random_state=1)#将数据集分为训练集和测试集
 
  knn = neighbors.KNeighborsClassifier(n_neighbors=5)
  knn.fit(X_train, y_train)
@@ -42,3 +35,8 @@ accuracy_score(y_test, y_pred)
 #预测得分
 score=knn.score(X_test, y_test)
 print('预测得分:',score)
+#预测得分: 0.95555
+X_new = np.array([[6.2, 1.05, 3.33, 2.0]])
+prediction = knn.predict(X_new)
+print('预测鸢尾花的分类为: {}'.format(iris['target_names'][prediction]))
+#预测新红酒的分类为: ['versicolor']
